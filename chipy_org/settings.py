@@ -117,7 +117,7 @@ else:
 
 
 JOB_POST_KEY = env_var("JOB_POST_KEY", "")
-
+SLACK_TOKEN = env_var("SLACK_TOKEN", "")
 
 STATIC_ROOT = os.path.abspath(os.path.join(PROJECT_ROOT, "..", "staticfiles"))
 

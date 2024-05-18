@@ -5,6 +5,10 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
+from chipy_org import settings, slackin
+from chipy_org.dispatcher import PathDispatcher
+
+
 """
 WSGI config for chipy project.
 
@@ -29,7 +33,14 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "chipy_org.settings")
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
-application = get_wsgi_application()
+# application = get_wsgi_application()
+
+def make_app(prefix):
+    if prefix == "slackin": return slackin.app
+
+slackin.app.config["token"] = settings.SLACK_TOKEN
+
+application = PathDispatcher(get_wsgi_application(), make_app)
 
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication
